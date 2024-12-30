@@ -21,4 +21,9 @@ import server.views as views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", views.index, name="index"),
+    path("/topics", views.handle_show_main_topics, name="topics"),
+    path("/points", views.handle_show_main_points, name="points"),
+    path("/similarities", views.handle_check_similarities, name="similarities"),
+    path("/solutions", views.handle_get_solutions, name="solutions"),
+    path("/context", views.handle_add_context, name="context"),
 ]
