@@ -1,0 +1,68 @@
+:root {
+  --bg-sender-light: #daf8cb;
+  --bg-receiver-light: #f1f1f1;
+  --bg-sender-dark: #2e7d32;
+  --bg-receiver-dark: #424242;
+
+  --text-light: #000000;
+  --text-dark: #ffffff;
+
+  --time-light: #6c757d;
+  --time-dark: #b0bec5;
+
+  --border-radius: 10px;
+}
+
+[data-theme="light"] {
+  --bg-sender: var(--bg-sender-light);
+  --bg-receiver: var(--bg-receiver-light);
+  --text: var(--text-light);
+  --time: var(--time-light);
+}
+
+/*[data-theme="dark"] {*/
+/*  --bg-sender: var(--bg-sender-dark);*/
+/*  --bg-receiver: var(--bg-receiver-dark);*/
+/*  --text: var(--text-dark);*/
+/*  --time: var(--time-dark);*/
+/*}*/
+
+body {
+  background-color: var('light');
+  color: var(--text);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.message {
+  display: flex;
+  margin: 10px;
+  max-width: 60%;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.message.sender {
+  align-self: flex-end;
+  background-color: var(--bg-sender);
+  color: var(--text);
+}
+
+.message.receiver {
+  align-self: flex-start;
+  background-color: var(--bg-receiver);
+  color: var(--text);
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-time {
+  font-size: 0.8rem;
+  color: var(--time);
+  text-align: right;
+  margin-top: 5px;
+}

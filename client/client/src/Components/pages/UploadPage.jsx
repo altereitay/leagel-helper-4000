@@ -1,23 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 function UploadPage() {
   const [files, setFiles] = useState(null);
-  const [url, setUrl] = useState("");
+  const [urls, setUrls] = useState("");
+  const [userID, setUserID] = useState('');
   const navigate = useNavigate();
 
+  const handleUrlsChange = e =>{
+    const input = e.target.value;
+    const urlArray = input.split(/\r?,/).map((url) => url.trim()).filter((url) => url);
+    setUrls(urlArray);
+  }
+
   const handleSubmit = async () => {
+    const userid = uuidv4();
+    setUserID(userid);
+    localStorage.setItem("userid", userid);
     const formData = new FormData();
     if (files) {
-      Array.from(files).forEach((file) => formData.append("files", file));
-    }
-    if (url) {
-      formData.append("url", url);
-    }
+    Array.from(files).forEach((file) => formData.append("files", file));
+  }
+
+  // Append URLs to FormData
+  if (urls.length > 0) {
+    urls.forEach((url) => formData.append("urls", url)); // Append each URL separately
+  }
+
+  // Append userID to FormData
+  formData.append("userID", userID);
 
     // Send data to the server
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/process-data/", {
+      console.log(formData)
+      const response = await fetch("http://localhost:8000/context", {
         method: "POST",
         body: formData,
       });
@@ -38,12 +55,12 @@ function UploadPage() {
         <input type="file" multiple onChange={(e) => setFiles(e.target.files)} />
       </div>
       <div style={{ marginTop: "10px" }}>
-        <label>Provide a Source URL:</label>
+        <label>Provide a Source URLs:</label>
         <input
-          type="url"
-          placeholder="https://example.com"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          type="text"
+          placeholder="enter URLs separated by commas"
+          value={urls}
+          onChange={handleUrlsChange}
         />
       </div>
       <button onClick={handleSubmit} style={{ marginTop: "20px" }}>
