@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Message from '../massages/Message.jsx'
 import {useNavigate} from "react-router-dom";
+import './ChatPage.css';
 
 function ChatPage() {
     const [question, setQuestion] = useState("");
@@ -115,38 +116,31 @@ function ChatPage() {
     };
 
     return (
-        <div style={{padding: "20px", textAlign: "center"}}>
-            <h1>Ask the Chatbot</h1>
-            <div>
-                <input
-                    type="text"
-                    placeholder="Ask a question..."
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                />
-                <button onClick={handleAsk} style={{marginLeft: "10px"}}>
-                    Ask
-                </button>
-                <button onClick={handleMainTopics} style={{marginLeft: "10px"}}>
-                    Show Main Topics
-                </button>
-                <button onClick={handleMainPoints} style={{marginLeft: "10px"}}>
-                    Show Main Points
-                </button>
-                <button onClick={handleSimilarities} style={{marginLeft: "10px"}}>
-                    Check For Similarities
-                </button>
-                <button onClick={handleSolution} style={{marginLeft: "10px"}}>
-                    Give me a Possible Solution
-                </button>
-                <button onClick={handleBack} style={{marginLeft: "10px"}}>
-                    Back
-                </button>
-            </div>
-            <div style={{display: "flex", flexDirection: "column", margin: "20px"}}>
-                {messages.map(m => <Message text={m.text} type={m.type}/>)}
-            </div>
-        </div>
+        <div className="chat-container">
+  <h1>Ask the Chatbot</h1>
+  <div className="chat-controls">
+    <input
+      type="text"
+      placeholder="Ask a question..."
+      value={question}
+      onChange={(e) => setQuestion(e.target.value)}
+    />
+    <button onClick={handleAsk}>Ask</button>
+    <button onClick={handleMainTopics}>Show Main Topics</button>
+    <button onClick={handleMainPoints}>Show Main Points</button>
+    <button onClick={handleSimilarities}>Check For Similarities</button>
+    <button onClick={handleSolution}>Give me a Possible Solution</button>
+    <button onClick={handleBack}>Back</button>
+  </div>
+  <div className="chat-messages">
+    {messages.map((m, index) => (
+      <div key={index} className={`message ${m.type}`}>
+        {m.text}
+      </div>
+    ))}
+  </div>
+</div>
+
     );
 }
 

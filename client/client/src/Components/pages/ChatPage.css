@@ -1,0 +1,79 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f7fb;
+    font-family: "Inter", sans-serif;
+  }
+  
+  .chat-container {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 30px;
+    background: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+  }
+  
+  .chat-container h1 {
+    font-size: 2rem;
+    color: #213547;
+  }
+  
+  .chat-controls {
+    margin: 20px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .chat-controls input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .chat-controls button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #646cff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 300ms ease;
+  }
+  
+  .chat-controls button:hover {
+    background-color: #535bf2;
+  }
+  
+  .chat-messages {
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+  }
+  
+  .chat-messages .message {
+    margin-bottom: 10px;
+  }
+  
+  .chat-messages .message.sender {
+    text-align: right;
+    color: #646cff;
+  }
+  
+  .chat-messages .message.receiver {
+    text-align: left;
+    color: #213547;
+  }
+  
