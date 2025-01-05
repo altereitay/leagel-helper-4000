@@ -66,7 +66,7 @@ def handle_check_similarities(request):
         if user_id == '':
             return JsonResponse({'msg': 'no user ID sent'}, status=http.HTTPStatus.BAD_REQUEST)
         msg = helper.send_message(user_id,
-                                  'show me if there is similarities in the context documents, if there is not than say there are no simailarites')
+                                  'show me if there is similarities in the context, if there is not than say there are no simailarites')
         return JsonResponse({'msg': msg})
     except Exception as err:
         return JsonResponse({'msg': err}, status=http.HTTPStatus.BAD_REQUEST)
@@ -81,7 +81,7 @@ def handle_get_solutions(request):
         user_id = data.get('userID', '')
         if user_id == '':
             return JsonResponse({'msg': 'no user ID sent'}, status=http.HTTPStatus.BAD_REQUEST)
-        msg = helper.send_message(user_id, 'give me a possible solution to this conflict')
+        msg = helper.send_message(user_id, 'based on the context given, provide me a solid solution that is beneficial to both parites, Dont give me how to come to a solution')
         return JsonResponse({'msg': msg})
     except Exception as err:
         return JsonResponse({'msg': err}, status=http.HTTPStatus.BAD_REQUEST)

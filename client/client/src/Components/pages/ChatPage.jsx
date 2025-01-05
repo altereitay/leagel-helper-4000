@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Message from '../massages/Message.jsx'
 import {useNavigate} from "react-router-dom";
+import './ChatPage.css'
 
 function ChatPage() {
     const [question, setQuestion] = useState("");
@@ -22,6 +23,7 @@ function ChatPage() {
     }
     const handleAsk = async () => {
         setMessages((prevMessages) => [...prevMessages, {text: question, type: 'sender'}]);
+        setQuestion('');
         try {
             const res = await fetch("http://localhost:8000", {
                 method: "POST",
@@ -115,36 +117,29 @@ function ChatPage() {
     };
 
     return (
-        <div style={{padding: "20px", textAlign: "center"}}>
+        <div className="chat-container">
             <h1>Ask the Chatbot</h1>
-            <div>
-                <input
-                    type="text"
+            <div className="chat-input-section">
+                <textarea
                     placeholder="Ask a question..."
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                 />
-                <button onClick={handleAsk} style={{marginLeft: "10px"}}>
-                    Ask
-                </button>
-                <button onClick={handleMainTopics} style={{marginLeft: "10px"}}>
-                    Show Main Topics
-                </button>
-                <button onClick={handleMainPoints} style={{marginLeft: "10px"}}>
-                    Show Main Points
-                </button>
-                <button onClick={handleSimilarities} style={{marginLeft: "10px"}}>
-                    Check For Similarities
-                </button>
-                <button onClick={handleSolution} style={{marginLeft: "10px"}}>
-                    Give me a Possible Solution
-                </button>
-                <button onClick={handleBack} style={{marginLeft: "10px"}}>
-                    Back
-                </button>
+                <button onClick={handleAsk} style={{marginTop: "10px"}}>Ask</button>
             </div>
-            <div style={{display: "flex", flexDirection: "column", margin: "20px"}}>
-                {messages.map(m => <Message text={m.text} type={m.type}/>)}
+            <div className="button-group">
+                <button onClick={handleMainTopics}>Show Main Topics</button>
+                <button onClick={handleMainPoints}>Show Main Points</button>
+                <button onClick={handleSimilarities}>Check For Similarities</button>
+                <button onClick={handleSolution}>Give me a Possible Solution</button>
+                <button onClick={handleBack}>Back</button>
+            </div>
+            <div className="message-container">
+                {messages.map((m, index) => (
+                    <div key={index} className={`message ${m.type}`}>
+                        <p>{m.text}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );
