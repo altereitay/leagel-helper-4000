@@ -19,20 +19,18 @@ def initialize_user_context(user_id):
 
 
 def add_to_context(user_id, role, content):
-    if user_id in users_contexts:
-        users_contexts[user_id].append({"role": role, "content": content})
-        return 'added context'
-    return 'user not found'
-
-def send_message(user_id, message: str = ''):
     if user_id not in users_contexts:
         initialize_user_context(user_id)
+    users_contexts[user_id].append({"role": 'system', "content": 'this is context that you will provide answers from ' + content})
+    return 'added context'
+
+def send_message(user_id, message: str = ''):
     add_to_context(user_id, "user", message)
     if message == '':
         return 'empty'
     try:
         chat_completion = client.chat.completions.create(
-            model="gpt-4o-mini",
+            model="chatgpt-4o-latest",
             messages=users_contexts[user_id]
         )
         return chat_completion.choices[0].message.content
@@ -40,7 +38,7 @@ def send_message(user_id, message: str = ''):
         return f'Error: {e}'
 
 def process_and_send_file(file):
-    temp_filename = f"temp_{file.filename}"
+    temp_filename = f"temp_{file.name}"
     with open(temp_filename, 'wb') as temp_file:
         temp_file.write(file.read())
 

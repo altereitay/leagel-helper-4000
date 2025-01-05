@@ -14,7 +14,6 @@ def index(request):
         return JsonResponse({'msg': 'wrong request index'}, status=400)
     try:
         data = json.loads(request.body)
-        print(data)
         question = data.get('question', '')
         if question == '':
             return JsonResponse({'msg': 'no question sent'}, status=http.HTTPStatus.BAD_REQUEST)
@@ -98,16 +97,14 @@ def handle_add_context(request):
             return JsonResponse({'msg': 'no user ID sent'}, status=http.HTTPStatus.BAD_REQUEST)
         files = request.FILES.getlist('files') or ''
         links = request.POST.getlist('urls') or ''
-        print(user_id)
-        print(files)
-        print(links)
         if links == '' and files == '':
             return JsonResponse({'msg': 'no context sent'}, status=http.HTTPStatus.BAD_REQUEST)
+        res = ''
         for link in links:
-            helper.add_to_context(user_id, 'user', link)
+            res += helper.add_to_context(user_id, 'user', link)
         for file in files:
             text = helper.process_and_send_file(file)
-            helper.add_to_context(user_id, 'user', text)
+            res += helper.add_to_context(user_id, 'user', text)
         return JsonResponse({'msg': 'context has added'})
     except Exception as err:
         return JsonResponse({'msg': err}, status=http.HTTPStatus.BAD_REQUEST)

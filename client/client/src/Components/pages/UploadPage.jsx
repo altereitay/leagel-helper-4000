@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 function UploadPage() {
-  const [files, setFiles] = useState(null);
+  const [files, setFiles] = useState([]);
   const [urls, setUrls] = useState("");
   const [userID, setUserID] = useState('');
   const navigate = useNavigate();
@@ -13,6 +13,15 @@ function UploadPage() {
     const urlArray = input.split(/\r?,/).map((url) => url.trim()).filter((url) => url);
     setUrls(urlArray);
   }
+
+  const handleFileChange = (e) => {
+    if (e.target.files) {
+      let tempFiles = [...files];
+      tempFiles.push(e.target.files[0])
+      setFiles(tempFiles);
+    }
+  };
+
 
   const handleSubmit = async () => {
     const userid = uuidv4();
@@ -29,17 +38,15 @@ function UploadPage() {
   }
 
   // Append userID to FormData
-  formData.append("userID", userID);
+  formData.append("userID", userid);
 
     // Send data to the server
     try {
-      console.log(formData)
       const response = await fetch("http://localhost:8000/context", {
         method: "POST",
         body: formData,
       });
       if (response.ok) {
-        // Move to the chat page
         navigate("/chat");
       }
     } catch (error) {
@@ -52,7 +59,7 @@ function UploadPage() {
       <h1>Upload Your Documents and URL</h1>
       <div>
         <label>Upload Documents:</label>
-        <input type="file" multiple onChange={(e) => setFiles(e.target.files)} />
+        <input type="file" multiple onChange={handleFileChange} />
       </div>
       <div style={{ marginTop: "10px" }}>
         <label>Provide a Source URLs:</label>
