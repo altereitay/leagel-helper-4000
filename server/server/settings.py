@@ -69,11 +69,13 @@ TEMPLATES = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
+    "http://localhost:5173",
+    "http://localhost:5174",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",  # Frontend URL
+    "http://localhost:5173",
+    "http://localhost:5174",  # Frontend URL
 ]
 
 WSGI_APPLICATION = 'server.wsgi.application'

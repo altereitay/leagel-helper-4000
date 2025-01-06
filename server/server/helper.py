@@ -21,7 +21,7 @@ def initialize_user_context(user_id):
 def add_to_context(user_id, role, content):
     if user_id not in users_contexts:
         initialize_user_context(user_id)
-    users_contexts[user_id].append({"role": 'system', "content": 'this is context that you will provide answers from ' + content})
+    users_contexts[user_id].append({"role": 'system', "content": 'this is context that you will provide answers from in english only ' + content})
     return 'added context'
 
 def send_message(user_id, message: str = ''):
