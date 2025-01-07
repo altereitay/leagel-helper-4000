@@ -114,7 +114,7 @@ function UploadPage() {
                 <label style={{color: "#6dd5ed"}}>Provide Source URLs</label>
                 <input
                     type="text"
-                    placeholder="Enter URLs separated by commas"
+                    placeholder="Enter URLs separated by semicolon"
                     value={urls}
                     onChange={handleUrlsChange}
                 />
